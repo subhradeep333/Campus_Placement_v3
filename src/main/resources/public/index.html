@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Placement & Resume Match Portal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <header class="navbar">
+            <div class="nav-brand">
+                <div class="brand-logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                </div>
+                <div>
+                    <span class="brand-title">HireNext</span>
+                    <span class="brand-badge">CV Match Portal</span>
+                </div>
+            </div>
+
+            <!-- Role Selector Tabs -->
+            <div class="role-nav">
+                <button class="role-tab active" id="btnStudentRole">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Student Portal</span>
+                </button>
+                <button class="role-tab" id="btnCompanyRole">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>
+                    <span>Recruiter Portal</span>
+                </button>
+            </div>
+
+            <!-- Auth / User Controls -->
+            <div class="nav-actions">
+                <div class="auth-group" id="authBar">
+                    <button class="btn btn-outline" id="openLoginBtn">Sign In</button>
+                    <button class="btn btn-primary-gradient" id="openRegisterBtn">Register</button>
+                </div>
+                
+                <div class="user-chip hidden" id="userBadge">
+                    <div class="avatar-circle" id="userAvatar">U</div>
+                    <span id="userDisplayName">User</span>
+                    <button class="btn-icon-ghost" id="logoutBtn" title="Log Out">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- KPI Executive Dashboard Stats -->
+        <section class="kpi-dashboard">
+            <div class="kpi-card blue">
+                <div class="kpi-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                </div>
+                <div>
+                    <span class="kpi-value" id="kpiTotalDrives">4</span>
+                    <span class="kpi-label">Active Placement Drives</span>
+                </div>
+            </div>
+
+            <div class="kpi-card emerald">
+                <div class="kpi-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <div>
+                    <span class="kpi-value" id="kpiMaxCtc">₹ 24.5 LPA</span>
+                    <span class="kpi-label">Highest Package Offered</span>
+                </div>
+            </div>
+
+            <div class="kpi-card purple">
+                <div class="kpi-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                </div>
+                <div>
+                    <span class="kpi-value" id="kpiApplications">3</span>
+                    <span class="kpi-label">CV Applications Match</span>
+                </div>
+            </div>
+
+            <div class="kpi-card amber">
+                <div class="kpi-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div>
+                    <span class="kpi-value" id="kpiAvgCtc">₹ 17.1 LPA</span>
+                    <span class="kpi-label">Average Package Offered</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Quick Testing Toolbar -->
+        <div class="demo-toolbar">
+            <span class="demo-tag">DEMO PRESETS</span>
+            <div class="demo-chips">
+                <button class="chip-btn" id="demoStudent1Btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Student: Rahul Sharma (Java CV)
+                </button>
+                <button class="chip-btn" id="demoStudent2Btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Student: Priya Patel (Embedded CV)
+                </button>
+                <button class="chip-btn" id="demoCompanyBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/></svg>
+                    Recruiter: Google Team
+                </button>
+            </div>
+        </div>
+
+        <!-- UNIQUE FEATURE BANNER: CV / Resume Match Parser -->
+        <div class="smart-match-banner">
+            <div class="match-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="match-info">
+                <h3>CV / Resume Smart Match Engine</h3>
+                <p>Upload your CV file or paste resume content below. The system parses your technical experience and predicts your match score for each company.</p>
+            </div>
+        </div>
+
+        <!-- =================================================== -->
+        <!-- STUDENT VIEW -->
+        <!-- =================================================== -->
+        <main class="grid-layout" id="studentView">
+            <!-- Left Main Column: Drives & CV Profile -->
+            <section class="panel-card main-panel">
+                <div class="sub-tab-nav">
+                    <button class="tab-link active" id="subTabApply">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        Job Drives & CV Match Analysis
+                    </button>
+                    <button class="tab-link" id="subTabProfile">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Upload CV & Profile
+                    </button>
+                </div>
+
+                <!-- Sub-Section 1: Drives List with CV Match -->
+                <div id="subSectionApply" class="sub-section">
+                    <div class="toolbar-header">
+                        <div>
+                            <h2>Company Drives & Resume Compatibility</h2>
+                            <p class="section-desc">Scores calculated directly from your uploaded CV text & credentials</p>
+                        </div>
+                        <div class="search-input-wrapper">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" id="studentSearchInput" placeholder="Search by company or role...">
+                        </div>
+                    </div>
+                    <div id="studentDriveList" class="drive-cards-grid">
+                        <!-- Rendered by app.js -->
+                    </div>
+                </div>
+
+                <!-- Sub-Section 2: Upload CV & Profile Form -->
+                <div id="subSectionProfile" class="sub-section hidden">
+                    <div class="toolbar-header">
+                        <div>
+                            <h2>Upload Resume / CV & Details</h2>
+                            <p class="section-desc">Upload your CV document or paste resume summary to calculate drive match score</p>
+                        </div>
+                    </div>
+                    <form id="studentProfileForm" class="pro-form">
+                        <div class="form-grid-2">
+                            <div class="field-group">
+                                <label for="profRollNumber">Roll Number *</label>
+                                <input type="text" id="profRollNumber" placeholder="e.g. CS2026-042" required>
+                            </div>
+                            <div class="field-group">
+                                <label for="profStudentName">Full Name *</label>
+                                <input type="text" id="profStudentName" placeholder="e.g. Rahul Sharma" required>
+                            </div>
+                        </div>
+                        <div class="form-grid-2">
+                            <div class="field-group">
+                                <label for="profCgpa">Current CGPA *</label>
+                                <input type="number" id="profCgpa" step="0.01" min="0" max="10" placeholder="e.g. 8.5" required>
+                            </div>
+                            <div class="field-group">
+                                <label for="profBranch">Branch / Discipline *</label>
+                                <input type="text" id="profBranch" placeholder="e.g. Computer Science" required>
+                            </div>
+                        </div>
+                        <div class="form-grid-2">
+                            <div class="field-group">
+                                <label for="profEmail">Email Address *</label>
+                                <input type="email" id="profEmail" placeholder="student@univ.edu" required>
+                            </div>
+                            <div class="field-group">
+                                <label for="profPhone">Contact Number</label>
+                                <input type="text" id="profPhone" placeholder="+91 9876543210">
+                            </div>
+                        </div>
+                        <div class="field-group">
+                            <label for="profSkills">Skills Keywords</label>
+                            <input type="text" id="profSkills" placeholder="e.g. Java, Python, SQL, React, Data Structures">
+                        </div>
+
+                        <!-- CV FILE UPLOAD DROPZONE -->
+                        <div class="field-group">
+                            <label>📄 Upload CV / Resume File (.pdf, .txt, .doc)</label>
+                            <div class="file-dropzone" id="dropzone">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                <span>Click to select CV document</span>
+                                <input type="file" id="profCvFileInput" accept=".pdf,.txt,.doc,.docx" style="display:none;">
+                            </div>
+                            <span class="file-name-label" id="fileNameDisplay">No CV file selected</span>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="profCvText">📝 Parsed CV Content / Resume Text Summary</label>
+                            <textarea id="profCvText" rows="4" placeholder="Paste or view parsed CV text here (e.g., Experienced Java SDE with background in Data Structures, Spring Boot, and MySQL Databases)..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary-gradient" id="saveProfileBtn">
+                            Save CV & Recalculate Drive Match Scores
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Right Sidebar: Applications Tracker -->
+            <section class="panel-card side-panel">
+                <div class="panel-header">
+                    <h2>Track Applications</h2>
+                    <p class="section-desc">Enter your roll number to view live application status</p>
+                </div>
+                <div class="search-input-wrapper">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <input type="text" id="studentRollLookup" placeholder="e.g. CS2026-042">
+                </div>
+                <button class="btn btn-secondary-pro" id="lookupBtn">Check Status</button>
+
+                <div id="myApplicationsList" class="applications-stack">
+                    <!-- Rendered by app.js -->
+                </div>
+            </section>
+        </main>
+
+        <!-- =================================================== -->
+        <!-- COMPANY / RECRUITER VIEW -->
+        <!-- =================================================== -->
+        <main class="grid-layout hidden" id="companyView">
+            <!-- Left Panel: Create Opening -->
+            <section class="panel-card side-panel">
+                <div class="panel-header">
+                    <h2>Post Recruitment Opening</h2>
+                    <p class="section-desc">Publish a new company drive into MySQL database</p>
+                </div>
+                <form id="companyDriveForm" class="pro-form">
+                    <div class="field-group">
+                        <label for="compName">Company Name *</label>
+                        <input type="text" id="compName" placeholder="e.g. Google, Microsoft" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="compRole">Job Title / Designation *</label>
+                        <input type="text" id="compRole" placeholder="e.g. Software Engineer" required>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="field-group">
+                            <label for="compPackage">CTC (LPA) *</label>
+                            <input type="number" id="compPackage" step="0.5" placeholder="e.g. 18.0" required>
+                        </div>
+                        <div class="field-group">
+                            <label for="compCgpa">Min Cutoff CGPA</label>
+                            <input type="number" id="compCgpa" step="0.1" min="0" max="10" placeholder="e.g. 7.5">
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="compLocation">Job Location</label>
+                        <input type="text" id="compLocation" placeholder="e.g. Bangalore, Remote">
+                    </div>
+
+                    <div class="field-group">
+                        <label for="compStatus">Drive Lifecycle Status</label>
+                        <select id="compStatus">
+                            <option value="OPEN">🟢 Open for Applications</option>
+                            <option value="INTERVIEWING">🟡 Interviewing Rounds</option>
+                            <option value="CLOSED">🔴 Drive Closed</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary-gradient" id="companySubmitBtn">
+                        Publish Placement Drive
+                    </button>
+                </form>
+            </section>
+
+            <!-- Right Main Panel: Management Console -->
+            <section class="panel-card main-panel">
+                <div class="sub-tab-nav">
+                    <button class="tab-link active" id="tabManageDrives">Manage Drives</button>
+                    <button class="tab-link" id="tabReviewApps">Applicant CV Reviews</button>
+                    <button class="tab-link" id="tabStudentDirectory">Student CV Directory</button>
+                </div>
+
+                <div id="panelDrives" class="sub-section">
+                    <div id="companyDriveList" class="drive-stack">
+                        <!-- Rendered by app.js -->
+                    </div>
+                </div>
+
+                <div id="panelApplications" class="sub-section hidden">
+                    <div id="companyAppList" class="applicant-stack">
+                        <!-- Rendered by app.js -->
+                    </div>
+                </div>
+
+                <div id="panelStudents" class="sub-section hidden">
+                    <div id="studentDirectoryList" class="applicant-stack">
+                        <!-- Rendered by app.js -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-backdrop hidden" id="loginModal">
+        <div class="modal-box">
+            <div class="modal-title-bar">
+                <h3>Sign In to HireNext</h3>
+                <button class="close-icon-btn" id="closeLoginBtn">&times;</button>
+            </div>
+            <form id="loginForm" class="pro-form">
+                <div class="field-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" placeholder="e.g. rahul or google_recruiter" required>
+                </div>
+                <div class="field-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary-gradient">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-backdrop hidden" id="registerModal">
+        <div class="modal-box">
+            <div class="modal-title-bar">
+                <h3>Create an Account</h3>
+                <button class="close-icon-btn" id="closeRegisterBtn">&times;</button>
+            </div>
+            <form id="registerForm" class="pro-form">
+                <div class="field-group">
+                    <label for="regFullName">Full Name</label>
+                    <input type="text" id="regFullName" placeholder="e.g. Alex Morgan" required>
+                </div>
+                <div class="form-grid-2">
+                    <div class="field-group">
+                        <label for="regUsername">Username</label>
+                        <input type="text" id="regUsername" placeholder="alex2026" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="regEmail">Email Address</label>
+                        <input type="email" id="regEmail" placeholder="alex@univ.edu" required>
+                    </div>
+                </div>
+                <div class="form-grid-2">
+                    <div class="field-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" placeholder="••••••••" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="regRole">Role</label>
+                        <select id="regRole">
+                            <option value="STUDENT">Student Candidate</option>
+                            <option value="COMPANY">Company Recruiter</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary-gradient">Register Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Application Modal -->
+    <div class="modal-backdrop hidden" id="applyModal">
+        <div class="modal-box">
+            <div class="modal-title-bar">
+                <h3 id="modalDriveTitle">Apply for Drive</h3>
+                <button class="close-icon-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="studentApplyForm" class="pro-form">
+                <input type="hidden" id="modalDriveId">
+                <div class="field-group">
+                    <label for="studentName">Full Name *</label>
+                    <input type="text" id="studentName" placeholder="e.g. Rahul Sharma" required>
+                </div>
+                <div class="form-grid-2">
+                    <div class="field-group">
+                        <label for="rollNumber">Roll Number *</label>
+                        <input type="text" id="rollNumber" placeholder="e.g. CS2026-042" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="studentCgpa">CGPA *</label>
+                        <input type="number" id="studentCgpa" step="0.01" min="0" max="10" placeholder="e.g. 8.5" required>
+                    </div>
+                </div>
+                <div class="form-grid-2">
+                    <div class="field-group">
+                        <label for="branch">Branch *</label>
+                        <input type="text" id="branch" placeholder="e.g. Computer Science" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="studentEmail">Email *</label>
+                        <input type="email" id="studentEmail" placeholder="student@univ.edu" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary-gradient">Submit Application with CV</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Recruiter CV Inspector Modal -->
+    <div class="modal-backdrop hidden" id="cvPreviewModal">
+        <div class="modal-box" style="max-width: 580px;">
+            <div class="modal-title-bar">
+                <h3 id="cvModalTitle">📄 Student CV & Match Breakdown</h3>
+                <button class="close-icon-btn" id="closeCvModalBtn">&times;</button>
+            </div>
+            <div id="cvModalContent">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-stack"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

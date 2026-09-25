@@ -1,0 +1,21 @@
+# Compiled Java class files
+bin/
+*.class
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.ls-cache
+
+# Antigravity IDE & temporary artifacts
+.gemini/
+scratch/
+*.log
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
