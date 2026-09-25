@@ -371,6 +371,9 @@ public class Main {
         exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+        exchange.getResponseHeaders().add("X-Content-Type-Options", "nosniff");
+        exchange.getResponseHeaders().add("X-Frame-Options", "DENY");
+        exchange.getResponseHeaders().add("X-XSS-Protection", "1; mode=block");
     }
 
     private static String readRequestBody(HttpExchange exchange) throws IOException {

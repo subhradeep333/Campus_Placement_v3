@@ -138,6 +138,12 @@ function initNavigation() {
     const appStatusFilter = document.getElementById('appStatusFilter');
     if (appStatusFilter) appStatusFilter.addEventListener('change', renderCompanyApplications);
 
+    const recruiterAppSearch = document.getElementById('recruiterAppSearch');
+    if (recruiterAppSearch) recruiterAppSearch.addEventListener('input', renderCompanyApplications);
+
+    const studentDirSearch = document.getElementById('studentDirSearch');
+    if (studentDirSearch) studentDirSearch.addEventListener('input', renderStudentDirectory);
+
     const exportCsvBtn = document.getElementById('exportCsvBtn');
     if (exportCsvBtn) exportCsvBtn.addEventListener('click', exportApplicationsToCsv);
 
@@ -701,10 +707,21 @@ function renderCompanyApplications() {
     }
 
     const selectedStatus = document.getElementById('appStatusFilter')?.value || 'ALL';
-    const filteredApps = applications.filter(a => selectedStatus === 'ALL' || a.applicationStatus === selectedStatus);
+    const searchQuery = (document.getElementById('recruiterAppSearch')?.value || '').toLowerCase().trim();
+
+    const filteredApps = applications.filter(a => {
+        const matchesStatus = selectedStatus === 'ALL' || a.applicationStatus === selectedStatus;
+        const matchesSearch = !searchQuery || 
+            a.studentName.toLowerCase().includes(searchQuery) ||
+            a.rollNumber.toLowerCase().includes(searchQuery) ||
+            a.companyName.toLowerCase().includes(searchQuery) ||
+            a.role.toLowerCase().includes(searchQuery) ||
+            a.branch.toLowerCase().includes(searchQuery);
+        return matchesStatus && matchesSearch;
+    });
 
     if (filteredApps.length === 0) {
-        companyAppList.innerHTML = `<div class="empty-state"><p>No applications found with status "${selectedStatus}".</p></div>`;
+        companyAppList.innerHTML = `<div class="empty-state"><p>No matching applications found.</p></div>`;
         return;
     }
 
@@ -785,7 +802,22 @@ function renderStudentDirectory() {
         return;
     }
 
-    studentDirectoryList.innerHTML = registeredStudents.map(s => `
+    const searchQuery = (document.getElementById('studentDirSearch')?.value || '').toLowerCase().trim();
+    const filteredStudents = registeredStudents.filter(s => {
+        if (!searchQuery) return true;
+        return s.studentName.toLowerCase().includes(searchQuery) ||
+               s.rollNumber.toLowerCase().includes(searchQuery) ||
+               s.branch.toLowerCase().includes(searchQuery) ||
+               (s.skills || '').toLowerCase().includes(searchQuery) ||
+               (s.cvText || '').toLowerCase().includes(searchQuery);
+    });
+
+    if (filteredStudents.length === 0) {
+        studentDirectoryList.innerHTML = '<div class="empty-state"><p>No matching candidate profiles found.</p></div>';
+        return;
+    }
+
+    studentDirectoryList.innerHTML = filteredStudents.map(s => `
         <div class="app-row-card">
             <div>
                 <strong>${escapeHtml(s.studentName)}</strong> (${escapeHtml(s.rollNumber)})
