@@ -73,6 +73,23 @@ public class ApplicationDaoImpl implements ApplicationDao {
     }
 
     @Override
+    public boolean existsByDriveIdAndRollNumber(int driveId, String rollNumber) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM student_applications WHERE drive_id = ? AND LOWER(roll_number) = LOWER(?)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, driveId);
+            stmt.setString(2, rollNumber);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
     public StudentApplication save(StudentApplication app) throws SQLException {
         String sql = "INSERT INTO student_applications (drive_id, student_name, roll_number, cgpa, branch, email, application_status) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";

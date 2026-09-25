@@ -9,5 +9,6 @@ import java.util.List;
  */
 public interface ApplicationDao extends GenericDao<StudentApplication, Integer> {
     List<StudentApplication> findByRollNumber(String rollNumber) throws SQLException;
+    boolean existsByDriveIdAndRollNumber(int driveId, String rollNumber) throws SQLException;
     boolean updateStatus(int id, String status) throws SQLException;
 }

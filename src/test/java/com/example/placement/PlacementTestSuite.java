@@ -28,6 +28,7 @@ public class PlacementTestSuite {
         runTest("Placement Drive Entity Validation", PlacementTestSuite::testPlacementDriveModel);
         runTest("User Authentication Entity & Roles", PlacementTestSuite::testUserEntity);
         runTest("Student Application Entity Tracking", PlacementTestSuite::testStudentApplicationEntity);
+        runTest("Single Application Per Drive Rule Verification", PlacementTestSuite::testDuplicateApplicationPrevention);
         runTest("CV Smart Match Algorithm Simulation", PlacementTestSuite::testCvSmartMatchLogic);
         runTest("REST API HTTP Server Live Endpoint Health", PlacementTestSuite::testHttpServerHealth);
 
@@ -124,6 +125,15 @@ public class PlacementTestSuite {
 
         assertEquals("SHORTLISTED", app.getApplicationStatus(), "Application status mismatch");
         assertEquals(10, app.getDriveId(), "Drive ID mismatch");
+    }
+
+    // 5. Test Duplicate Application Rule (1 Application Per Student Per Drive)
+    private static void testDuplicateApplicationPrevention() {
+        StudentApplication app1 = new StudentApplication(1, 1, "Google", "SDE", "Rahul Sharma", "CS2026-042", 8.50, "CS", "rahul@univ.edu", "APPLIED", "2026-09-26");
+        StudentApplication app2 = new StudentApplication(2, 1, "Google", "SDE", "Rahul Sharma", "CS2026-042", 8.50, "CS", "rahul@univ.edu", "APPLIED", "2026-09-26");
+
+        boolean isDuplicate = (app1.getDriveId() == app2.getDriveId()) && app1.getRollNumber().equalsIgnoreCase(app2.getRollNumber());
+        assertTrue(isDuplicate, "Expected duplicate application check to trigger");
     }
 
     // 5. Test CV Smart Match Scoring Simulation

@@ -112,6 +112,9 @@ public class PlacementServiceImpl implements PlacementService {
 
     @Override
     public StudentApplication applyForDrive(StudentApplication app) throws SQLException {
+        if (appDao.existsByDriveIdAndRollNumber(app.getDriveId(), app.getRollNumber())) {
+            throw new IllegalArgumentException("Student (" + app.getRollNumber() + ") has already applied for this company drive.");
+        }
         return appDao.save(app);
     }
 

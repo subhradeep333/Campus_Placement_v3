@@ -525,13 +525,15 @@ function renderStudentDrives() {
                     <span>Location: ${escapeHtml(d.location || 'Bangalore')}</span>
                     <span>Min Cutoff CGPA: <strong>${d.minCgpa.toFixed(1)}</strong></span>
                 </div>
-                ${d.status === 'OPEN' ? `
+                ${d.status !== 'OPEN' ? `
+                    <button class="btn btn-secondary-pro" disabled>Drive ${d.status}</button>
+                ` : (currentRoll && applications.some(a => a.driveId === d.id && a.rollNumber.toLowerCase() === currentRoll.toLowerCase()) ? `
+                    <button class="btn btn-secondary-pro" style="color:#10b981; border-color:rgba(16,185,129,0.4);" disabled>Applied ✓</button>
+                ` : `
                     <button class="btn btn-primary-gradient" onclick="openApplyModal(${d.id}, '${escapeHtml(d.companyName)}', '${escapeHtml(d.role)}')">
                         Apply Now
                     </button>
-                ` : `
-                    <button class="btn btn-secondary-pro" disabled>Drive ${d.status}</button>
-                `}
+                `)}
             </div>
         `;
     }).join('');
@@ -563,6 +565,14 @@ async function handleStudentApply(e) {
     const cgpa = parseFloat(document.getElementById('studentCgpa').value);
     const branch = document.getElementById('branch').value.trim();
     const email = document.getElementById('studentEmail').value.trim();
+
+    // Enforce 1 application per student per company drive
+    const alreadyApplied = applications.some(a => a.driveId === driveId && a.rollNumber.toLowerCase() === rollNumber.toLowerCase());
+    if (alreadyApplied) {
+        showToast('⚠️ You have already applied for this company drive!');
+        applyModal.classList.add('hidden');
+        return;
+    }
 
     try {
         const res = await fetch(API_APPS, {

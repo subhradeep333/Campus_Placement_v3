@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS student_applications (
     email VARCHAR(255) NOT NULL,
     application_status VARCHAR(50) DEFAULT 'APPLIED', -- 'APPLIED', 'SHORTLISTED', 'SELECTED', 'REJECTED'
     applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_student_drive (drive_id, roll_number),
     FOREIGN KEY (drive_id) REFERENCES placement_drives(id) ON DELETE CASCADE
 );
 
