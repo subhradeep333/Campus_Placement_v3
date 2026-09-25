@@ -131,6 +131,16 @@ function initNavigation() {
     studentProfileForm.addEventListener('submit', handleProfileSave);
     lookupBtn.addEventListener('click', lookupMyApplications);
     studentSearchInput.addEventListener('input', renderStudentDrives);
+
+    const packageFilter = document.getElementById('packageFilter');
+    if (packageFilter) packageFilter.addEventListener('change', renderStudentDrives);
+
+    const appStatusFilter = document.getElementById('appStatusFilter');
+    if (appStatusFilter) appStatusFilter.addEventListener('change', renderCompanyApplications);
+
+    const exportCsvBtn = document.getElementById('exportCsvBtn');
+    if (exportCsvBtn) exportCsvBtn.addEventListener('click', exportApplicationsToCsv);
+
     closeModalBtn.addEventListener('click', () => applyModal.classList.add('hidden'));
     const closeCvModalBtn = document.getElementById('closeCvModalBtn');
     if (closeCvModalBtn) {
@@ -463,10 +473,15 @@ async function handleProfileSave(e) {
 
 function renderStudentDrives() {
     const query = studentSearchInput.value.toLowerCase();
+    const minPackage = parseFloat(document.getElementById('packageFilter')?.value || '0');
     const currentRoll = studentRollLookup.value.trim();
     const activeStudent = registeredStudents.find(s => s.rollNumber.toLowerCase() === currentRoll.toLowerCase());
 
-    const filtered = drives.filter(d => d.companyName.toLowerCase().includes(query) || d.role.toLowerCase().includes(query));
+    const filtered = drives.filter(d => {
+        const matchesQuery = d.companyName.toLowerCase().includes(query) || d.role.toLowerCase().includes(query) || (d.location || '').toLowerCase().includes(query);
+        const matchesPkg = d.packageLpa >= minPackage;
+        return matchesQuery && matchesPkg;
+    });
 
     if (filtered.length === 0) {
         studentDriveList.innerHTML = '<div class="empty-state"><p>No recruitment drives available.</p></div>';
@@ -675,7 +690,15 @@ function renderCompanyApplications() {
         return;
     }
 
-    companyAppList.innerHTML = applications.map(app => {
+    const selectedStatus = document.getElementById('appStatusFilter')?.value || 'ALL';
+    const filteredApps = applications.filter(a => selectedStatus === 'ALL' || a.applicationStatus === selectedStatus);
+
+    if (filteredApps.length === 0) {
+        companyAppList.innerHTML = `<div class="empty-state"><p>No applications found with status "${selectedStatus}".</p></div>`;
+        return;
+    }
+
+    companyAppList.innerHTML = filteredApps.map(app => {
         const student = registeredStudents.find(s => s.rollNumber.toLowerCase() === app.rollNumber.toLowerCase());
         const drive = drives.find(d => d.id === app.driveId);
         const match = (student && drive) ? computeSmartMatchScore(student, drive) : { score: 80, level: 'high', label: '80% Match' };
@@ -704,6 +727,46 @@ function renderCompanyApplications() {
             </div>
         `;
     }).join('');
+}
+
+function exportApplicationsToCsv() {
+    if (applications.length === 0) {
+        showToast('No applications available to export.');
+        return;
+    }
+
+    const headers = ['Application ID', 'Roll Number', 'Student Name', 'Company Name', 'Role', 'CGPA', 'Branch', 'Email', 'Application Status', 'CV Match Score %', 'Uploaded CV Filename'];
+    const rows = applications.map(app => {
+        const student = registeredStudents.find(s => s.rollNumber.toLowerCase() === app.rollNumber.toLowerCase());
+        const drive = drives.find(d => d.id === app.driveId);
+        const match = (student && drive) ? computeSmartMatchScore(student, drive) : { score: 80 };
+        const cvFile = student ? (student.cvFilename || 'Resume.pdf') : 'N/A';
+
+        return [
+            app.id,
+            `"${app.rollNumber}"`,
+            `"${app.studentName}"`,
+            `"${app.companyName}"`,
+            `"${app.role}"`,
+            app.cgpa,
+            `"${app.branch}"`,
+            `"${app.email}"`,
+            `"${app.applicationStatus}"`,
+            `${match.score}%`,
+            `"${cvFile}"`
+        ].join(',');
+    });
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `Placement_Applicants_CV_Report_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    showToast('📥 Applicant CV report exported as CSV!');
 }
 
 function renderStudentDirectory() {

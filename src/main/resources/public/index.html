@@ -150,9 +150,17 @@
                             <h2>Company Drives & Resume Compatibility</h2>
                             <p class="section-desc">Scores calculated directly from your uploaded CV text & credentials</p>
                         </div>
-                        <div class="search-input-wrapper">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                            <input type="text" id="studentSearchInput" placeholder="Search by company or role...">
+                        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                            <select id="packageFilter" style="background:#1f2937; color:#fff; border:1px solid var(--border-color); padding:8px 12px; border-radius:8px; font-size:0.82rem;">
+                                <option value="0">All Package CTCs</option>
+                                <option value="8">₹ 8+ LPA</option>
+                                <option value="15">₹ 15+ LPA</option>
+                                <option value="20">₹ 20+ LPA</option>
+                            </select>
+                            <div class="search-input-wrapper">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <input type="text" id="studentSearchInput" placeholder="Search by company or role...">
+                            </div>
                         </div>
                     </div>
                     <div id="studentDriveList" class="drive-cards-grid">
@@ -312,6 +320,20 @@
                 </div>
 
                 <div id="panelApplications" class="sub-section hidden">
+                    <div class="toolbar-header" style="margin-bottom: 14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <select id="appStatusFilter" style="background:#1f2937; color:#fff; border:1px solid var(--border-color); padding:6px 12px; border-radius:8px; font-size:0.82rem;">
+                                <option value="ALL">All Application Statuses</option>
+                                <option value="APPLIED">Applied</option>
+                                <option value="SHORTLISTED">Shortlisted</option>
+                                <option value="SELECTED">Selected</option>
+                                <option value="REJECTED">Rejected</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-secondary-pro" id="exportCsvBtn" style="font-size:0.82rem; padding:6px 14px;">
+                            📥 Export Applicant CV List (CSV)
+                        </button>
+                    </div>
                     <div id="companyAppList" class="applicant-stack">
                         <!-- Rendered by app.js -->
                     </div>
