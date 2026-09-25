@@ -362,14 +362,56 @@ function initDemoShortcuts() {
 
     demoCompanyBtn.addEventListener('click', async () => {
         switchRole('COMPANY');
-        document.getElementById('compName').value = 'Apple Inc.';
-        document.getElementById('compRole').value = 'iOS Software Engineer';
-        document.getElementById('compPackage').value = '22.5';
-        document.getElementById('compCgpa').value = '7.5';
+        document.getElementById('compName').value = 'Google';
+        document.getElementById('compRole').value = 'Software Development Engineer';
+        document.getElementById('compPackage').value = '24.5';
+        document.getElementById('compCgpa').value = '8.0';
         document.getElementById('compLocation').value = 'Bangalore';
         document.getElementById('compStatus').value = 'OPEN';
-        showToast('Populated sample recruitment drive');
+        showToast('Logged in as Google Recruiter');
     });
+
+    const demoCompany2Btn = document.getElementById('demoCompany2Btn');
+    if (demoCompany2Btn) {
+        demoCompany2Btn.addEventListener('click', async () => {
+            switchRole('COMPANY');
+            document.getElementById('compName').value = 'Microsoft';
+            document.getElementById('compRole').value = 'Associate SDE II';
+            document.getElementById('compPackage').value = '19.5';
+            document.getElementById('compCgpa').value = '7.5';
+            document.getElementById('compLocation').value = 'Hyderabad';
+            document.getElementById('compStatus').value = 'OPEN';
+            showToast('Logged in as Microsoft Recruiter');
+        });
+    }
+
+    const demoCompany3Btn = document.getElementById('demoCompany3Btn');
+    if (demoCompany3Btn) {
+        demoCompany3Btn.addEventListener('click', async () => {
+            switchRole('COMPANY');
+            document.getElementById('compName').value = 'Amazon';
+            document.getElementById('compRole').value = 'System Development Engineer';
+            document.getElementById('compPackage').value = '18.0';
+            document.getElementById('compCgpa').value = '7.0';
+            document.getElementById('compLocation').value = 'Bangalore';
+            document.getElementById('compStatus').value = 'OPEN';
+            showToast('Logged in as Amazon Recruiter');
+        });
+    }
+
+    const demoCompany4Btn = document.getElementById('demoCompany4Btn');
+    if (demoCompany4Btn) {
+        demoCompany4Btn.addEventListener('click', async () => {
+            switchRole('COMPANY');
+            document.getElementById('compName').value = 'Meta';
+            document.getElementById('compRole').value = 'Full Stack Product Engineer';
+            document.getElementById('compPackage').value = '26.0';
+            document.getElementById('compCgpa').value = '8.2';
+            document.getElementById('compLocation').value = 'Gurgaon';
+            document.getElementById('compStatus').value = 'OPEN';
+            showToast('Logged in as Meta Recruiter');
+        });
+    }
 }
 
 // FETCH DATA

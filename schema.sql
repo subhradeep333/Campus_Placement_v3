@@ -64,7 +64,9 @@ INSERT INTO users (id, username, password, full_name, email, role) VALUES
 (1, 'rahul', 'password123', 'Rahul Sharma', 'rahul.s@univ.edu', 'STUDENT'),
 (2, 'priya', 'password123', 'Priya Patel', 'priya.p@univ.edu', 'STUDENT'),
 (3, 'google_recruiter', 'password123', 'Google Campus Hiring', 'recruiter@google.com', 'COMPANY'),
-(4, 'msft_recruiter', 'password123', 'Microsoft HR Team', 'hr@microsoft.com', 'COMPANY')
+(4, 'msft_recruiter', 'password123', 'Microsoft HR Team', 'hr@microsoft.com', 'COMPANY'),
+(5, 'amazon_recruiter', 'password123', 'Amazon Talent Acquisition', 'recruiter@amazon.com', 'COMPANY'),
+(6, 'meta_recruiter', 'password123', 'Meta University Recruiting', 'careers@meta.com', 'COMPANY')
 ON DUPLICATE KEY UPDATE username=VALUES(username);
 
 -- 6. Initial Demo Students with Sample CV Text
